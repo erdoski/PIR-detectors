@@ -69,7 +69,6 @@ void loop() {
       analogWrite(led3,0); 
       analogWrite(led4,0); 
       analogWrite(led5,0);
-      variable = 0;
     }
     
     //Serial.println(variable);
@@ -188,10 +187,6 @@ void loop() {
       analogWrite(led5,0);
     }
     break;
-    
-    case 0 :
-      digitalWrite(led1,LOW);
-      break;
       
     case 2:
       sn = 0;
@@ -230,7 +225,7 @@ void loop() {
         bool trigger2 = digitalRead(dataPin2);
         bool trigger1 = digitalRead(dataPin1);
         if(trigger1 || trigger2 || trigger4 || trigger5){
-          Serial.println("case 2'den çıkıldı");
+          Serial.println("case 3'den çıkıldı");
           break;
         }
       }
@@ -356,7 +351,6 @@ void loop() {
                       analogWrite(led2,0); 
                       delay(300);
                       analogWrite(led1,0); 
-                      Serial.println("sa");
                     }
                     if(trigger5 || trigger4 || trigger3 ){
                         Serial.println("Pathway bozuldu");
