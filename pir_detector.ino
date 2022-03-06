@@ -1,3 +1,4 @@
+
 long nextCheck;
 int dataPin1 = 2, dataPin2 = 3, dataPin3 = 4, dataPin4 = 5, dataPin5 = 6;
 int led1 = 8, led2 = 9, led3 = 10, led4 = 11, led5 = 12;
@@ -7,7 +8,7 @@ int waitTime = 10;
 
  //255 205 175 100 20
 void setup() {
-  // put your setup code here, to run once:
+  //Input/Output'un belirlenmesi ve port ile haberlemenin başlaması
   Serial.begin(115200);
   pinMode(dataPin1,INPUT);
   pinMode(dataPin2,INPUT);
@@ -22,13 +23,15 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   if(HIGH){
+   //Sensörlerden verilerin alınması
     bool trigger1 = digitalRead(dataPin1);
     bool trigger2 = digitalRead(dataPin2);
     bool trigger3 = digitalRead(dataPin3);
     bool trigger4 = digitalRead(dataPin4);
     bool trigger5 = digitalRead(dataPin5);
+   
+   //totalde 6 farklı durum var. Birden fazla sensör çalışırsa case 6, sadece sensör1 çalışırsa case 1, sadece sensör2 çalışırsa case 2 vs.
     if((trigger1 && trigger2) || (trigger1 && trigger3) ||
        (trigger1 && trigger4) || (trigger1 && trigger5) || 
        (trigger2 && trigger3) || (trigger2 && trigger4) || 
@@ -71,10 +74,10 @@ void loop() {
       analogWrite(led5,0);
     }
     
-    //Serial.println(variable);
     switch(variable){
     case 1 :
       sn = 0;
+      // sadece sensör 1 aktive olursa çalışacak
       while(sn < waitTime){
         analogWrite(led1,255); delay(400);
         analogWrite(led2,225); delay(400);
@@ -88,6 +91,7 @@ void loop() {
         bool trigger4 = digitalRead(dataPin4);
         bool trigger5 = digitalRead(dataPin5);
         
+       //sensör1 aktiveyken 10 saniye içinde sensör 2 aktive olursa akiftleşir, sensör2 dışında bir sensör aktifleşirse case'den çıkılır
         if(trigger2){
           sn = 10;
           sn1 = 0;
@@ -105,6 +109,7 @@ void loop() {
             bool trigger4 = digitalRead(dataPin4);
             bool trigger5 = digitalRead(dataPin5);
             
+           //sensör2 aktiveyken 10 saniye içinde sensör3 aktive olursa akiftleşir, sensör3 dışında bir sensör aktifleşirse case'den çıkılır
             if(trigger3) {  
               sn1 = 10;
               sn2 = 0;
@@ -121,7 +126,8 @@ void loop() {
                 bool trigger2 = digitalRead(dataPin2);
                 bool trigger4 = digitalRead(dataPin4);
                 bool trigger5 = digitalRead(dataPin5);
-
+                
+               //sensör3 aktiveyken 10 saniye içinde sensör 4 aktive olursa akiftleşir, sensör4 dışında bir sensör aktifleşirse case'den çıkılır
                 if(trigger4){
                   sn2 = 10;
                   sn3 = 0;
@@ -137,7 +143,8 @@ void loop() {
                     bool trigger2 = digitalRead(dataPin2);
                     bool trigger3 = digitalRead(dataPin3);
                     bool trigger5 = digitalRead(dataPin5);
-
+                    
+                   //sensör4 aktiveyken 10 saniye içinde sensör5 aktive olursa akiftleşir, sensör5 dışında bir sensör aktifleşirse case'den çıkılır
                     if(trigger5){
                       sn3 = 10;
                       sn4 = 0;
